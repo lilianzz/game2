@@ -32,7 +32,6 @@ public class Ghosts {
     }
     
     public boolean randMove(Blocks b, Bombs bs) {
-        int t;
         /*
         int a = (int) Math.floor(Math.random() * 14);
         for (int i = 0; i<ghostList.size();i++) {
@@ -55,12 +54,20 @@ public class Ghosts {
             }
         }*/
         for (Ghost g:ghostList) {
-        	switch (Tool.randInt(5)) {
+        	int t = Tool.randInt(4);
+        	switch (t) {
         	case 0: g.up(); break;
         	case 1: g.down(); break;
         	case 2: g.left(); break;
         	case 3: g.right(); break;
         	}
+        	if (!(b.notIn(g) && bs.notIn(g) && g.inRange()))
+	        	switch (t) {
+	        	case 0: g.down(); break;
+	        	case 1: g.up(); break;
+	        	case 2: g.right(); break;
+	        	case 3: g.left(); break;
+	        	}
         }
         return true;
     }
