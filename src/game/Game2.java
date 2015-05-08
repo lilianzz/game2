@@ -28,7 +28,7 @@ public class Game2 {
     
     public static void main(String[] args) {
         // TODO code application logic here
-        World game = new World();
+        GameWorld game = new GameWorld();
         game.bigBang(600, 600, 0.2);
         for (int i=0; i<300; i++) {
         System.out.println(testBlocks());
