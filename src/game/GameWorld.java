@@ -11,8 +11,10 @@ package game;
  * @author ���绮����
  */
 import java.awt.Color; 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import phase.MainWorld;
 import javalib.funworld.World;
 import javalib.worldimages.*;
 
@@ -126,7 +128,7 @@ public class GameWorld extends javalib.funworld.World {
         */
     
     @SuppressWarnings("empty-statement")
-    public GameWorld onKeyEvent(String k) {
+    public World onKeyEvent(String k) {
         if (k.equals("left")) {
             if (blocks.notIn(c.left()) && bombs.notIn(c.left()) && c.left().inRange()) {
                     c = c.left();}
@@ -150,6 +152,14 @@ public class GameWorld extends javalib.funworld.World {
         if (k.equals("z")) {
             bombs.add(c.posn());
             return this;
+        }
+        else if (k.equals("x")) {
+        	try {
+				return new MainWorld();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         return this;
     } 

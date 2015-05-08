@@ -10,6 +10,7 @@ import javalib.worldimages.RectangleImage;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import javalib.worldimages.WorldImage;
+import javalib.worldimages.*;
 import phase.MainWorld;
 import phase.Selections;
 import phase.StoreWorld;
@@ -33,6 +34,7 @@ public class GameFailWorld extends javalib.funworld.World{
 
     public WorldImage makeImage() {
         WorldImage pic = basic;
+        pic = new OverlayImages(pic, new FromFileImage(new Posn(300,105), "graph/bad_end.jpg"));
         pic = new OverlayImages(pic, selections.draw());
         return(pic);
     }

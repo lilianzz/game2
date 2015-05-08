@@ -1,6 +1,7 @@
 package phase;
 
 import game.GameWorld;
+
 import javalib.funworld.World;
 
 import java.awt.Color;
@@ -13,6 +14,7 @@ import javalib.worldimages.RectangleImage;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import javalib.worldimages.WorldImage;
+import javalib.worldimages.FromFileImage;
 
 public class MainWorld extends javalib.funworld.World{
 	final static String signNewGame = "NEW GAME";
