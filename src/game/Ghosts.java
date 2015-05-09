@@ -71,6 +71,19 @@ public class Ghosts {
         }
         return true;
     }
+    /**
+     * Check if the ghosts have met the character
+     * @param c The character
+     * @return
+     */
+    public boolean capture(Char c) {
+    	for (Ghost g : ghostList) {
+    		if (g.posn().x == c.posn().x && g.posn().y == c.posn().y) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
     
     public WorldImage draw() {        
         WorldImage t = new RectangleImage(new Posn(0,0),1,1,Color.blue);             

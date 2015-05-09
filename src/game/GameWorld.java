@@ -24,7 +24,7 @@ public class GameWorld extends javalib.funworld.World {
     Char c;
     Blocks blocks;
     Bombs bombs;
-    Ghosts ghost;
+    Ghosts ghosts;
     boolean alive;
     boolean suc;
     int ng;
@@ -33,7 +33,7 @@ public class GameWorld extends javalib.funworld.World {
         this.c = new Char((new Posn(25,25)),0);
         this.blocks = new Blocks(3);
         ng = 3;
-        this.ghost = new Ghosts(ng);
+        this.ghosts = new Ghosts(ng);
         this.bombs = new Bombs(4);
         
         blocks.remove(c.posn());
@@ -78,8 +78,8 @@ public class GameWorld extends javalib.funworld.World {
         if (!(this.bombs.number == 0)) {
             com = new OverlayImages(com,this.bombs.draw());
         }
-        if (!(this.ghost.draw() == null)) {
-            com = new OverlayImages(com,this.ghost.draw());
+        if (!(this.ghosts.draw() == null)) {
+            com = new OverlayImages(com,this.ghosts.draw());
         }
         return(com);
     }
@@ -93,8 +93,8 @@ public class GameWorld extends javalib.funworld.World {
         if (!(this.bombs.draw() == null)) {
             com = new OverlayImages(com,this.bombs.draw());
         }
-        if (!(this.ghost.draw() == null)) {
-            com = new OverlayImages(com,this.ghost.draw());
+        if (!(this.ghosts.draw() == null)) {
+            com = new OverlayImages(com,this.ghosts.draw());
         }        
         TextImage s2 = new TextImage(
                 new Posn(300,300),
@@ -114,8 +114,10 @@ public class GameWorld extends javalib.funworld.World {
     //  Block drops
     //  Check for clear & color blend
     public World onTick() {        
-        alive = bombs.Explode(blocks,c,ghost);
-        ghost.randMove(blocks,bombs);
+        alive = bombs.Explode(blocks,c,ghosts);
+        ghosts.randMove(blocks,bombs);
+        alive = alive && (!ghosts.capture(c));
+        
         if (!alive) 
         	return new GameFailWorld(makeImage());
         return this;
@@ -160,6 +162,10 @@ public class GameWorld extends javalib.funworld.World {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+        }
+        
+        if (ghosts.capture(c)) {
+        	return new GameFailWorld(makeImage());
         }
         return this;
     } 

@@ -19,7 +19,6 @@ public class Ghost implements Element{
     Posn posn;    
     int coin;
     public Posn posn() {
-    	
         return this.posn;
     }
     public int Type() {
@@ -34,38 +33,17 @@ public class Ghost implements Element{
                 (this.posn.y > 0) &&
                 (this.posn.y < 600));
     }
-    //public Ghost up() {
-    //    int le = this.posn.y - 50;
-    //    return(new Ghost(new Posn(this.posn.x,le)));
-	//	
-    //}
-    //public Ghost down() {
-    //    int le = this.posn.y + 50;
-    //    return(new Ghost(new Posn(this.posn.x,le)));
-    //}
-    //public Ghost left() {
-    //    int le = this.posn.x - 50;
-    //    return(new Ghost(new Posn(le,this.posn.y)));
-    //}    
-    //public Ghost right() {
-    //    int le = this.posn.x + 50;
-    //    return(new Ghost(new Posn(le,this.posn.y)));
-    //}
 	public void up() {
 		posn.y -= 50;
-		//if (!inRange()) down();
 	}
 	public void down() {
 		posn.y += 50;
-		//if (!inRange()) up();
 	}
 	public void left() {
 		posn.x -= 50;
-		//if (!inRange()) right();
 	}
 	public void right() {
 		posn.x += 50;
-		//if (!inRange()) left();
 	}
     public WorldImage draw() {
         //Return a RectangleImage of the block
