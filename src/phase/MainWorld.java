@@ -15,7 +15,11 @@ import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import javalib.worldimages.WorldImage;
 import javalib.worldimages.FromFileImage;
-
+/**
+ * The world of "MAIN" phase. The first phase of the game
+ * @author 栗粒盐
+ *
+ */
 public class MainWorld extends javalib.funworld.World{
 	final static String signNewGame = "NEW GAME";
 	final static String signLoadGame = "LOAD GAME";

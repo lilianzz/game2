@@ -114,7 +114,7 @@ public class GameWorld extends javalib.funworld.World {
     //  Block drops
     //  Check for clear & color blend
     public World onTick() {        
-        alive = bombs.Explode(blocks,c,ghosts);
+        alive = bombs.explode(blocks,c,ghosts);
         ghosts.randMove(blocks,bombs);
         alive = alive && (!ghosts.capture(c));
         

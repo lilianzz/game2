@@ -6,7 +6,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+/**
+ * A class maintain static configuration of the user now
+ * @author 栗粒盐
+ *
+ */
 public final class User {
 
 	private User() {

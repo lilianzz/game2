@@ -7,25 +7,26 @@
 package game;
 import java.awt.Color; 
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import javalib.worldimages.*; 
-import javalib.worldimages.WorldImage;
 /**
  *
  * @author 栗粒盐
  */
 public class Bombs {
-    ArrayList<Bomb> b;
+    ArrayList<Bomb> bombList;
     int number;
     int max;
-    ArrayList<Fire> f;
+    ArrayList<Fire> fireList;
     
     public Bombs(int i) {
-        this.b = new ArrayList<>(300);
+        this.bombList = new ArrayList<>(300);
         this.number = 0;
         this.max = i;
     }
     public Bombs(ArrayList<Bomb> b, int number, int max) {
-        this.b = b;
+        this.bombList = b;
         this.number = number;
         this.max = max;
     }
@@ -36,20 +37,25 @@ public class Bombs {
         	System.out.println("I add a bomb");
             Bomb temp = new Bomb(15,p);
             number = number +1;
-            this.b.add(temp);
+            this.bombList.add(temp);
             System.out.println(number);
-            for (int i=0; i<b.size(); i++) {
-                System.out.println(b.get(i).posn.x);
+            for (int i=0; i<bombList.size(); i++) {
+                System.out.println(bombList.get(i).posn.x);
             }
             return true;
         //} else 
         //    return this;
     }
     
+    /**
+     * whether the element overlap a bomb
+     * @param e
+     * @return
+     */
     public boolean notIn(Element e) {
         boolean t = true;
-        for (int i = 0; i < b.size();i++){
-            Posn a = b.get(i).posn();
+        for (int i = 0; i < bombList.size();i++){
+            Posn a = bombList.get(i).posn();
             if ((e.posn().x == a.x) && (a.y == e.posn().y)) {
                 t = false;
             }
@@ -57,80 +63,106 @@ public class Bombs {
         return t;
     }
     
+    
     public WorldImage draw() {        
         WorldImage t = new RectangleImage(new Posn(0,0),1,1,Color.blue);             
-        for (Bomb b1 : this.b) {
+        for (Bomb b1 : this.bombList) {
             t = new OverlayImages(t,b1.draw());
         }
-        if (!(this.f==null)) {
-        for (Fire f1: this.f) {
-            t = new OverlayImages(t,f1.draw());
-        }}
+        if (!(this.fireList == null)) {
+	        for (Fire f1: this.fireList) {
+	            t = new OverlayImages(t,f1.draw());
+	        }
+        }
         return t;  
                     
     }
+    /** 
+     * Add fire to fireList, ignite other bombs and destory blocks
+     * @param fire		The fire object
+     * @param blocks	The blocks
+     * @return Whether the fire destory a block
+     */
+    public boolean addFire(Fire fire, Blocks blocks) {
+    	fireList.add(fire);
+    	/* Ignite bombs */
+    	for (Bomb bomb : bombList) {
+    		if (fire.contains(bomb.posn())) {
+    			bomb.time = 0;
+    		}
+    	}
+    	/* check block */
+    	for (Iterator<Block> iter = blocks.b.iterator(); iter.hasNext();) {
+    		Block block = iter.next();
+    		if (fire.contains(block.posn())) {
+    			iter.remove();
+    			return true;
+    		}
+    	}
+    	return false;
+    }
     
-    public boolean Explode(Blocks bk,Char c,Ghosts ghosts) {
-        boolean temp = true;
-        this.f = new ArrayList<>(300);
-        int r;
-        for (int i=0; i<b.size();i++) {
-            b.get(i).time--;
+    /**
+     * Add fires to fireList
+     * @param bomb		
+     * @param blocks	
+     */
+    public void explode(Bomb bomb, Blocks blocks) {
+        Posn posBomb = bomb.posn();
+        /* The radius of explosion */
+        int radiusBlocks = 3;
+        int radius = radiusBlocks * 50;
+        /* explode in each directions */
+        for (int x = posBomb.x; x < posBomb.x + radius; x = x + 50) {
+        	if (addFire(new Fire(new Posn(x, posBomb.y)), blocks)) break;//break when the fire meets a block
         }
-        for (int i = 0; i<b.size();i++) {
-            if (b.get(i).time <= 0) {                                
-                Posn p = b.get(i).posn();                 
-                Posn t = c.posn();
-                if (this.checkExplode(p,t,3,bk)) {
-                temp = false;                
-                }
-                r = 3;                
-                for (int j = 0; j < ghosts.ghostList.size();j++){
-                    Posn a = ghosts.ghostList.get(j).posn();
-                    if (this.checkExplode(p, a, 3, bk)){
-                        ghosts.ghostList.remove(j);
-                    }        
-                }
-                for (int j = 0; j < bk.b.size();j++){
-                    Posn a = bk.b.get(j).posn();
-                    if (this.checkExplode(p, a, 3, bk)){
-                        bk.b.remove(j);
-                    }        
-                }
-                b.remove(i);
-                for (int j = p.x-100;j<p.x+150; j = j+50) {
-                    f.add(new Fire(new Posn(j,p.y)));
-                }
-                for (int j = p.y-100;j<p.y+150; j = j+50) {
-                    f.add(new Fire(new Posn(p.x,j)));
-                }
+        for (int x = posBomb.x; x > posBomb.x - radius; x = x - 50) {
+        	if (addFire(new Fire(new Posn(x, posBomb.y)), blocks)) break;
+        }
+        for (int y = posBomb.y;	y < posBomb.y + radius; y = y + 50) {
+        	if (addFire(new Fire(new Posn(posBomb.x, y)), blocks)) break;
+        }
+        for (int y = posBomb.y; y > posBomb.y - radius; y = y - 50) {
+        	if (addFire(new Fire(new Posn(posBomb.x, y)), blocks)) break;
+        }
+    }
+    
+    public boolean explode(Blocks blocks,Char c,Ghosts ghosts) {
+        boolean tmpAlive = true;
+        this.fireList = new ArrayList<>(300);
+        /* ticks */
+        for (int i=0; i<bombList.size();i++) {
+            bombList.get(i).time--;
+        }
+        /* Iteratively ignite bombs */
+        boolean finish = false;
+        while (!finish) {
+	        finish = true;
+        	for (Iterator<Bomb> iter = bombList.iterator(); iter.hasNext();) {
+	        	Bomb b = iter.next();
+	        	if (b.time <= 0) {
+	        		iter.remove();
+	        		explode(b, blocks);
+	        		finish = false;
+	        	}
+	        }
+        }
+        
+        for (Fire fire : fireList) {
+        	//Check alive
+        	if (fire.contains(c.posn())) {
+        		tmpAlive = false;
+        	}
+        	//Kill ghosts
+        	for (Iterator<Ghost> iter = ghosts.ghostList.iterator(); iter.hasNext();) {
+            	Ghost ghost = iter.next();
+            	if (fire.contains(ghost.posn())) {
+            		iter.remove();
+            	}
             }
         }
-        return temp;
+        
+        return tmpAlive;
     }
-    
-    public boolean checkExplode(Posn p, Posn t, int r, Blocks bk) {
-        boolean temp = false;
-        if ((((t.x - p.x) < (r*50)) && ((t.x - p.x) > (r*-50)) && (t.y==p.y)) ||                
-                (((t.y - p.y) < (r*50)) && ((t.y - p.y) > (r*-50)) && (t.x==p.x))) {
-            temp = true;
-            for (int i = 0; i <bk.b.size();i++) {            
-                if (this.inBetween(p,t,bk.b.get(i).posn())) {
-                    temp = false;
-                }
-            }
-        }
-        return temp;
-    }
-    
-    public boolean inBetween(Posn a, Posn b, Posn c) {
-        if (((a.x < c.x) && (c.x < b.x) && (a.y == c.y) && (b.y == c.y)) ||
-                ((b.x < c.x) && (c.x < a.x) && (a.y == c.y) && (b.y == c.y)) ||
-                ((a.y < c.y) && (c.y < b.y) && (a.x == c.x) && (b.x == c.x)) ||
-                ((a.y < c.y) && (c.y < b.y) && (a.x == c.x) && (b.x == c.x))) {
-            return true;
-        } else return false;
-    }
-    
 
 }

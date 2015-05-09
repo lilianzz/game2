@@ -26,6 +26,13 @@ public class Fire {
     public Posn posn() {
         return this.posn;
     }
+    
+    public boolean contains(Posn posn) {
+    	if (this.posn.x-25 < posn.x && posn.x < this.posn.x + 25 && this.posn.y - 25 < posn.y && posn.y < this.posn.y + 25) {
+    		return true;
+    	}
+    	else return false;
+    }
     public WorldImage draw() {
         //Return a RectangleImage of the block
         return new RectangleImage(this.posn, 50, 50, Color.gray);

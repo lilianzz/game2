@@ -72,7 +72,7 @@ public class Ghosts {
         return true;
     }
     /**
-     * Check if the ghosts have met the character
+     * Check whether the ghosts have met the character
      * @param c The character
      * @return
      */

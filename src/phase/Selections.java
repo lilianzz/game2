@@ -58,7 +58,19 @@ public class Selections {
 	public void setSign(int x, int y, String sign) {
 		window[x][y].setSign(sign);
 	}
-	
+	/**
+	 * Set the words presented on one selection
+	 * Here's a 3*2 example:
+	 * ---------
+	 * |0  | 1 |
+	 * ---------
+	 * |2  | 3 |
+	 * ---------
+	 * |4  | 5 |
+	 * ---------
+	 * @param num	The global number of blocks, start from left-upper corner with number 0
+	 * @param sign	The word
+	 */
 	public void setSign(int num, String sign) {
 		int x = num / m;
 		int y = num % m;
@@ -72,11 +84,15 @@ public class Selections {
 	public int selectedM() {
 		return this.selectedM;
 	}
-	
+	/**
+	 * Get the sign of selected selection
+	 * @return sign
+	 */
 	public String getSelected() {
 		return window[selectedN][selectedM].getSign();
 	}
 	
+	/*four methods that update this class */
 	public void up() {
 		selectedN = (selectedN - 1 + n) % n;
 	}
@@ -94,12 +110,12 @@ public class Selections {
 	}
 	
 	public WorldImage draw() {
-		WorldImage draw = new RectangleImage(new Posn(0,0),1,1,Color.blue);
-		window[selectedN][selectedM].setColor(Color.red);
+		WorldImage draw = new RectangleImage(new Posn(0,0),1,1,Color.blue); //A useless particle
+		window[selectedN][selectedM].setColor(Color.red);					//Change the selected block's color to red
 		for (int i = 0; i < n; i ++)
 			for (int j = 0; j < m; j++)
-				draw = new OverlayImages(draw, window[i][j].draw());
-		window[selectedN][selectedM].setColor(Color.green);
+				draw = new OverlayImages(draw, window[i][j].draw());		//Draw the selections
+		window[selectedN][selectedM].setColor(Color.green);					//recover the selected block's color
 		return draw;
 	}
 	
