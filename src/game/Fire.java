@@ -7,6 +7,8 @@
 package game;
 
 import java.awt.Color;
+
+import user.Config;
 import javalib.worldimages.Posn;
 import javalib.worldimages.RectangleImage;
 import javalib.worldimages.WorldImage;
@@ -17,11 +19,16 @@ import javalib.worldimages.WorldImage;
  */
 public class Fire {
     Posn posn;
+    int time;
     public Fire(Posn p) {
         this.posn = p;
+        time = Config.fireExistTime;
     }
     public int Type() {
         return 6;
+    }
+    public int ticks() {
+    	return --time;
     }
     public Posn posn() {
         return this.posn;

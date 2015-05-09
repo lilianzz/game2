@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import user.Config;
+import user.User;
 import javalib.worldimages.*; 
 /**
  *
@@ -16,34 +18,31 @@ import javalib.worldimages.*;
  */
 public class Bombs {
     ArrayList<Bomb> bombList;
-    int number;
     int max;
-    ArrayList<Fire> fireList;
+    ArrayList<Fire> fireList = new ArrayList<>();
+    ArrayList<Fire> drawFireList = new ArrayList<>();
     
     public Bombs(int i) {
         this.bombList = new ArrayList<>(300);
-        this.number = 0;
         this.max = i;
     }
     public Bombs(ArrayList<Bomb> b, int number, int max) {
         this.bombList = b;
-        this.number = number;
         this.max = max;
     }
     
     public boolean add(Posn p) {
-        //if (number < max) {
-        
-        	System.out.println("I add a bomb");
+        if (this.bombList.size() < User.parameter("BOMB NUMBER")+2) {
+        	//System.out.println("I add a bomb");
             Bomb temp = new Bomb(15,p);
-            number = number +1;
             this.bombList.add(temp);
-            System.out.println(number);
-            for (int i=0; i<bombList.size(); i++) {
-                System.out.println(bombList.get(i).posn.x);
-            }
+            //System.out.println(number);
+            //for (int i=0; i<bombList.size(); i++) {
+            //    System.out.println(bombList.get(i).posn.x);
+            //}
             return true;
-        //} else 
+        }
+        return false;
         //    return this;
     }
     
@@ -69,10 +68,9 @@ public class Bombs {
         for (Bomb b1 : this.bombList) {
             t = new OverlayImages(t,b1.draw());
         }
-        if (!(this.fireList == null)) {
-	        for (Fire f1: this.fireList) {
-	            t = new OverlayImages(t,f1.draw());
-	        }
+        for (Fire fire: this.drawFireList) {
+        	//System.out.println("draw fire");
+            t = new OverlayImages(t,fire.draw());
         }
         return t;  
                     
@@ -95,6 +93,7 @@ public class Bombs {
     	for (Iterator<Block> iter = blocks.b.iterator(); iter.hasNext();) {
     		Block block = iter.next();
     		if (fire.contains(block.posn())) {
+    			User.earn(Config.blockEarnMoney);
     			iter.remove();
     			return true;
     		}
@@ -110,7 +109,7 @@ public class Bombs {
     public void explode(Bomb bomb, Blocks blocks) {
         Posn posBomb = bomb.posn();
         /* The radius of explosion */
-        int radiusBlocks = 3;
+        int radiusBlocks = User.parameter("BOMB POWER") + 1;
         int radius = radiusBlocks * 50;
         /* explode in each directions */
         for (int x = posBomb.x; x < posBomb.x + radius; x = x + 50) {
@@ -126,13 +125,23 @@ public class Bombs {
         	if (addFire(new Fire(new Posn(posBomb.x, y)), blocks)) break;
         }
     }
-    
-    public boolean explode(Blocks blocks,Char c,Ghosts ghosts) {
+    /**
+     * Simulate one tick of bombs
+     * @param blocks
+     * @param c
+     * @param ghosts
+     * @return
+     */
+    public boolean ticks(Blocks blocks,Char c,Ghosts ghosts) {
         boolean tmpAlive = true;
-        this.fireList = new ArrayList<>(300);
+        //this.fireList = new ArrayList<>(300);
         /* ticks */
         for (int i=0; i<bombList.size();i++) {
             bombList.get(i).time--;
+        }
+        for (Iterator<Fire> iter = drawFireList.iterator(); iter.hasNext();){
+        	Fire fire = iter.next();
+        	if (fire.ticks() <= 0) iter.remove();
         }
         /* Iteratively ignite bombs */
         boolean finish = false;
@@ -158,9 +167,13 @@ public class Bombs {
             	Ghost ghost = iter.next();
             	if (fire.contains(ghost.posn())) {
             		iter.remove();
+            		User.earn(Config.ghostEarnMoney);
             	}
             }
         }
+        
+        for (Fire fire : fireList) drawFireList.add(fire);
+        fireList.clear();
         
         return tmpAlive;
     }

@@ -92,6 +92,15 @@ public class Selections {
 		return window[selectedN][selectedM].getSign();
 	}
 	
+	/**
+	 * Get the number of the selected
+	 * @return number
+	 * @see	Selections.setSign 
+	 */
+	public int getSelectedNum() {
+		return selectedN * m + selectedM;
+	}
+	
 	/*four methods that update this class */
 	public void up() {
 		selectedN = (selectedN - 1 + n) % n;

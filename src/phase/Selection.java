@@ -9,10 +9,10 @@ import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldImage;
 
 public class Selection {
-	String sign;
-	int x, y;
-	Posn pos;
-	Color color = Color.green;
+	protected String sign;
+	protected int x, y;
+	protected Posn pos;
+	protected Color color = Color.green;
 	public Selection() {
 		// TODO Auto-generated constructor stub
 	}
