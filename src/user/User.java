@@ -27,21 +27,28 @@ public final class User {
 		DataInputStream saveFile;
 		try {
 			saveFile = new DataInputStream(new FileInputStream(fileName));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+		} catch (Exception e1) {
+			newGame();
 			e1.printStackTrace();
 			return;
 		}
-		level = saveFile.readInt();
-		money = saveFile.readInt();
-		for (int i = 0; i < Config.itemNum; i++) {
-			User.nowItemLevels[i] = saveFile.readInt();
+		try {
+			level = saveFile.readInt();
+			money = saveFile.readInt();
+			for (int i = 0; i < Config.itemNum; i++) {
+				User.nowItemLevels[i] = saveFile.readInt();
+			}
+		}
+		catch (Exception e) {
+			newGame();
+			//return;
 		}
 		try {
 			saveFile.close();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return;
 		}
 	}
 	

@@ -14,7 +14,7 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import phase.MainWorld;
+import main.MainWorld;
 import user.User;
 import javalib.funworld.World;
 import javalib.worldimages.*;

@@ -3,17 +3,11 @@ package game;
 import java.awt.Color;
 import java.io.IOException;
 
+import main.MainWorld;
 import javalib.funworld.World;
-import javalib.worldimages.OverlayImages;
-import javalib.worldimages.Posn;
-import javalib.worldimages.RectangleImage;
-import javalib.worldimages.TextImage;
-import javalib.worldimages.WorldEnd;
-import javalib.worldimages.WorldImage;
 import javalib.worldimages.*;
-import phase.MainWorld;
 import phase.Selections;
-import phase.StoreWorld;
+import store.StoreWorld;
 import user.User;
 
 public class GameFailWorld extends javalib.funworld.World{

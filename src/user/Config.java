@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import phase.Item;
+import store.Item;
 
 /**
  * The configuration of the game. Load information of item from file "config"

@@ -1,38 +1,46 @@
-package game;
+package main;
+
+import game.GameWorld;
+import javalib.funworld.World;
 
 import java.awt.Color;
 import java.io.IOException;
 
-import main.MainWorld;
-import javalib.funworld.World;
-import javalib.worldimages.FromFileImage;
+import phase.Selections;
+import store.StoreWorld;
+import user.User;
 import javalib.worldimages.OverlayImages;
 import javalib.worldimages.Posn;
+import javalib.worldimages.RectangleImage;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import javalib.worldimages.WorldImage;
-import phase.Selections;
-
-public class GameSuccessWorld extends World{
-
-	WorldImage basic;
-	public GameSuccessWorld(WorldImage basic) {
-		this.basic = basic;
-		selections = new Selections(2,1, 200,100, 400,500);
-		selections.setSign(0, signLevelUp);
-		selections.setSign(1, signReturn);
-	}
-	final static String signLevelUp = "LEVEL UP";
-	final static String signReturn = "RETURN";
+import javalib.worldimages.FromFileImage;
+/**
+ * The world of "MAIN" phase. The first phase of the game
+ * @author 栗粒盐
+ *
+ */
+public class MainWorld extends javalib.funworld.World{
+	final static String signNewGame = "NEW GAME";
+	final static String signLoadGame = "LOAD GAME";
+	final static String signStore = "STORE";
+	final static String signQuit = "QUIT";
 	
 	Selections selections;
+	boolean finish = false;
 	
-	
-
+	public MainWorld() throws IOException {
+		User.loadGame();
+		selections = new Selections(4,1, 100,100, 500,500);
+		selections.setSign(0, 0, signLoadGame);
+		selections.setSign(1, 0, signNewGame);
+		selections.setSign(2, 0, signStore);
+		selections.setSign(3, 0, signQuit);
+	}
 
     public WorldImage makeImage() {
-        WorldImage pic = basic;
-        pic = new OverlayImages(pic, new FromFileImage(new Posn(300,100), "graph/happy_end.jpg"));
+        WorldImage pic = new RectangleImage((new Posn(300,300)),600,600,Color.blue);
         pic = new OverlayImages(pic, selections.draw());
         return(pic);
     }
@@ -49,13 +57,13 @@ public class GameSuccessWorld extends World{
     }
     
     public WorldEnd worldEnds() {
-        return(new WorldEnd(false, makeEnd()));
+        return(new WorldEnd(finish, makeEnd()));
     }
     
     //  World onTick()
     //  Block drops
     //  Check for clear & color blend
-    public World onTick() {        
+    public MainWorld onTick() {        
         return this;
         //return(new World(this.score, this.live, this.d, this.height));        
     }
@@ -86,16 +94,24 @@ public class GameSuccessWorld extends World{
     } 
     
     public World choose(String sign) {
-    	if (sign.equals(signLevelUp)) {
-    		return new GameWorld();
-    	}
-    	else if (sign.equals(signReturn)) {
+    	if (sign.equals(signNewGame)) {
     		try {
-				return new MainWorld();
+				User.newGame();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+    		return new GameWorld();
+    	}
+    	else if (sign.equals(signLoadGame)) {
+    		//User.loadGame();
+    		return new GameWorld();
+    	}
+    	else if (sign.equals(signStore)) {
+    		return new StoreWorld();
+    	}
+    	else if (sign.equals(signQuit)) {
+    		finish = true;
     	}
     	return this;
     }
