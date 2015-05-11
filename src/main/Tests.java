@@ -11,8 +11,16 @@ import game.Blocks;
 import game.Ghost;
 import game.Bombs;
 import game.Ghosts;
+import game.*;
 import java.awt.Color;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 import javalib.worldimages.Posn;
+import phase.*;
+import user.*;
+import static user.User.save;
+
 
 /**
  *
@@ -56,6 +64,7 @@ public class Tests {
         c = new Char(randPosn());
         
         }
+        return true;
     }
     
     
@@ -119,62 +128,72 @@ public class Tests {
     static public boolean captureEqual() {
         boolean t = true;
         for (int i = 0; i<300;i++) {
-            Ghosts gg= new Ghosts(3);
-            Char c = new Char(gg.ghostList.get(2).posn());
+            Ghosts gg= new Ghosts(10);
+            Random random = new Random();
+            int j = random.nextInt(10);
+            Char c = new Char(gg.ghostList.get(j).posn());
             if (!gg.capture(c)) {t = false;}
         }
         return t;
     }
- 
-    static public boolean case1() {
-        Play test = new Play(480,600);
-        test.add(createBlock(2,0,Color.darkGray));        
-        test.add(createBlock(2,1,Color.gray));
-        test.add(createBlock(2,2,Color.lightGray));
-        test.add(createBlock(2,3,Color.white));
-        test.add(createBlock(2,4,Color.white));
-        while (!test.colorMatch()) {}        
-        System.out.println("group of dead blocks is: (Should print size 1 and a black block) ");
-        test.print();
-        if (!(test.landscape.size() ==1)) {return(false);} else {return(true);}        
+    
+    static public boolean selectionChange() {
+        boolean f = true;
+        for (int i=0; i<300;i++) {
+        Selections selections = new Selections(4,4, 100,100, 500,500);
+        Random random = new Random();
+        int t = random.nextInt(40);
+        for (int j=0; j<t; j++) {selections.up();}
+         t = random.nextInt(40);
+        for (int j=0; j<t; j++) {selections.left();}
+         t = random.nextInt(40);
+        for (int j=0; j<t; j++) {selections.down();}
+         t = random.nextInt(40);
+        for (int j=0; j<t; j++) {selections.right();}
+        if ((selections.selectedM() > 3) || (selections.selectedM() < 0) ||
+                (selections.selectedN() > 3) || (selections.selectedN() < 0)) {
+            f = false;
+        }
+        }
+        return f;              
     }
     
-    static public boolean stopAdd() {
-        boolean r = true;
-        for (int i=0; i<200; i++) {
-            Play test = randomBlocks();
-            int s1 = test.landscape.size();           
-            Block a = aRandomBlock();
-            boolean t = test.stop(a);
-            if (!t) {test.add(a);}           
-            if ((!t) && (s1 == test.landscape.size())) {r = false; test.print();}
+    static public boolean bombAllGhosts() {
+        boolean t = true;        
+        Blocks b = new Blocks();
+        Char c = new Char(new Posn(1000,1000));
+        for (int i=0; i<300; i++) {
+            Bombs bombs = new Bombs(5);
+            Ghosts g = new Ghosts(20);            
+            Posn r = randPosn();
+            for (int j=0; j<10 ;j++) {
+                r = g.ghostList.get(0).posn();
+                bombs.add(r);}
+            for (int j = 0; j<15; j++) {                
+                bombs.ticks(b,c,g);
+            }
+            if (g.ghostList.size() >= 20) {t = false;}
         }
-        return r;        
-    }   
-    
-    static public boolean case2() {
-        Play test = new Play(480,600);
-        test.add(createBlock(0,0,Color.darkGray));        
-        test.add(createBlock(1,0,Color.darkGray));
-        test.add(createBlock(2,0,Color.darkGray));
-        test.add(createBlock(3,0,Color.gray));
-        test.add(createBlock(0,1,Color.white));        
-        test.add(createBlock(1,1,Color.white));        
-        test.add(createBlock(3,1,Color.white));   
-        test.add(createBlock(3,2,Color.gray));          
-        Block live = (createBlock(2,1,Color.white));
-        test.add(live);
-        int score = 0;
-        while (!test.colorMatch()) {}
-        while (!(test.checkClear() == (null))) {
-            test.clear(test.checkClear());
-            score = score+5;
-            while (!test.colorMatch()) {}
-        }
-        System.out.println("Score: "+ score+"  (Should be 10)");
-        System.out.println("group of dead blocks is: (Should be empty and "
-                + "only show size is 0) ");
-        test.print();
-        if (score == 10) {return(true);} else {test.print();return(false);}        
+        return t;
     }
+    
+    static public boolean explodeBombs() {
+        boolean t = true;        
+        Blocks b = new Blocks();
+        Ghosts g = new Ghosts(0);
+        Char c = new Char(new Posn(1000,1000));
+        for (int i=0; i<3; i++) {
+            Bombs bombs = new Bombs(5);       
+            Posn r = randPosn();
+            Posn r1 = randPosn();
+            bombs.add(r);
+            bombs.add(r1);            
+            bombs.bombList.get(1).time = 0;
+            bombs.ticks(b, c, g);  
+            if (!(bombs.bombList.size() <2 )) 
+            {t =  false;}
+        }
+        return t;
+    }
+    
 }

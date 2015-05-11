@@ -15,7 +15,9 @@ import javalib.worldimages.WorldImage;
  */
 public class Blocks {
     public ArrayList<Block> b;
-    
+    public Blocks() {
+        b = new ArrayList<>(300);
+    }
     public Blocks(int t) {
         b = new ArrayList<>(300);
         int a;

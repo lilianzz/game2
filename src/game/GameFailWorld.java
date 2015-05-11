@@ -54,6 +54,7 @@ public class GameFailWorld extends javalib.funworld.World{
     //  Block drops
     //  Check for clear & color blend
     public GameFailWorld onTick() {        
+        if (User.life == 20) {System.out.println("Failed on loss of life test");}
         return this;
         //return(new World(this.score, this.live, this.d, this.height));        
     }

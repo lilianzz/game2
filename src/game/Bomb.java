@@ -17,7 +17,7 @@ import javalib.worldimages.WorldImage;
 public class Bomb implements Element {
     Color type = Color.black;
     Posn posn;    
-    int time;
+    public int time;
     public Bomb(int t, Posn posn) {
         this.posn = posn;
         this.time = t;

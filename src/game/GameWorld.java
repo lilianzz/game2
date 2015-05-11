@@ -92,17 +92,19 @@ public class GameWorld extends javalib.funworld.World {
     //  Block drops
     //  Check for clear & color blend
     public World onTick() {        
+        if (!(Test.testSpace(blocks, c))) { System.out.println("Fail on testSpace test");}
         alive = bombs.ticks(blocks,c,ghosts);
         ghosts.randMove(blocks,bombs);
         alive = alive && (!ghosts.capture(c));
-        
+        if (User.money < 0) { System.out.println("Fail on sufficient money test.");}
         if (ghosts.ghostList.isEmpty()) {
         	User.levelUp();
         	return new GameSuccessWorld(makeImage());
         }
         if (!alive) {
             User.loseLife();
-        	return new GameFailWorld(makeImage());}
+            
+            return new GameFailWorld(makeImage());}
         return this;    
     }
 

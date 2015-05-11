@@ -16,6 +16,7 @@ import javalib.worldimages.*;
 public class Ghosts {
     public ArrayList<Ghost> ghostList = new ArrayList<>(20);
     int number;
+    
     public Ghosts(int n) {
         int x;
         int y;

@@ -21,7 +21,7 @@ public class Config {
 	/* money */
 	public final static int initMoney = 100;
 	public final static int ghostEarnMoney = 10;        
-	public final static int initLife = 10;
+	public final static int initLife = 20;
 	public final static int blockEarnMoney = 1;
 	/* level */
 	public final static int initLevel = 1;

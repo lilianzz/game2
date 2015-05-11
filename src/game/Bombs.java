@@ -17,7 +17,7 @@ import javalib.worldimages.*;
  * @author 栗粒盐
  */
 public class Bombs {
-    ArrayList<Bomb> bombList;
+    public ArrayList<Bomb> bombList;
     int max;
     ArrayList<Fire> fireList = new ArrayList<>();
     ArrayList<Fire> drawFireList = new ArrayList<>();
@@ -139,6 +139,7 @@ public class Bombs {
         for (int i=0; i<bombList.size();i++) {
             bombList.get(i).time--;
         }
+        Posn pb = new Posn(1000,1000);
         for (Iterator<Fire> iter = drawFireList.iterator(); iter.hasNext();){
         	Fire fire = iter.next();
         	if (fire.ticks() <= 0) iter.remove();
@@ -150,8 +151,9 @@ public class Bombs {
         	for (Iterator<Bomb> iter = bombList.iterator(); iter.hasNext();) {
 	        	Bomb b = iter.next();
 	        	if (b.time <= 0) {
+                                pb = b.posn();
 	        		iter.remove();
-	        		explode(b, blocks);
+	        		explode(b, blocks);                                
 	        		finish = false;
 	        	}
 	        }
@@ -174,7 +176,14 @@ public class Bombs {
         
         for (Fire fire : fireList) drawFireList.add(fire);
         fireList.clear();
-        
+        boolean t = true;
+        for (Block block: blocks.b) {
+            if ((pb.x == block.posn().x) &&(pb.y == block.posn().y)) { t = false;}
+        }        
+        for (Ghost ghost: ghosts.ghostList) {
+            if ((pb.x == ghost.posn().x) &&(pb.y == ghost.posn().y)) { t = false;}
+        }
+        if (t==false)  {System.out.println("Fail on empty after explosion test.");}
         return tmpAlive;
     }
 
