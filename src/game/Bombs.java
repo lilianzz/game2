@@ -76,7 +76,7 @@ public class Bombs {
                     
     }
     /** 
-     * Add fire to fireList, ignite other bombs and destory blocks
+     * Add fire to fireList, ignite other bombs and destroy blocks
      * @param fire		The fire object
      * @param blocks	The blocks
      * @return Whether the fire destory a block
@@ -170,7 +170,7 @@ public class Bombs {
             		User.earn(Config.ghostEarnMoney);
             	}
             }
-        }
+        } 
         
         for (Fire fire : fireList) drawFireList.add(fire);
         fireList.clear();

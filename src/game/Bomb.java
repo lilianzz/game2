@@ -25,9 +25,6 @@ public class Bomb implements Element {
     public Posn posn(){
         return this.posn;
     };
-    public int Type() {
-        return 1;
-    }; 
     public WorldImage draw() {
         //Return a RectangleImage of the block
         return new RectangleImage(this.posn, 50, 50, Color.red);

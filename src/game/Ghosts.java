@@ -6,9 +6,7 @@
 
 package game;
 import java.awt.Color; 
-import java.util.ArrayList;
-
-import tool.Tool;
+import java.util.*;
 import javalib.worldimages.*; 
 
 /**
@@ -16,7 +14,7 @@ import javalib.worldimages.*;
  * @author 栗粒盐
  */
 public class Ghosts {
-    ArrayList<Ghost> ghostList = new ArrayList<>(20);
+    public ArrayList<Ghost> ghostList = new ArrayList<>(20);
     int number;
     public Ghosts(int n) {
         int x;
@@ -32,8 +30,10 @@ public class Ghosts {
     }
     
     public boolean randMove(Blocks b, Bombs bs) {
+        
         for (Ghost g:ghostList) {
-        	int t = Tool.randInt(4);
+            Random random = new Random();
+        	int t = random.nextInt(4);
         	switch (t) {
         	case 0: g.up(); break;
         	case 1: g.down(); break;

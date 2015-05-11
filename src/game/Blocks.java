@@ -14,7 +14,7 @@ import javalib.worldimages.WorldImage;
  * @author 栗粒盐
  */
 public class Blocks {
-    ArrayList<Block> b;
+    public ArrayList<Block> b;
     
     public Blocks(int t) {
         b = new ArrayList<>(300);
@@ -49,6 +49,9 @@ public class Blocks {
         return t;
     }
     
+    public int size() {
+        return b.size();
+    }
     
     public WorldImage draw() {        
         WorldImage t = new RectangleImage(new Posn(0,0),1,1,Color.blue);             

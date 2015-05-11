@@ -21,9 +21,6 @@ public class Ghost implements Element{
     public Posn posn() {
         return this.posn;
     }
-    public int Type() {
-        return 3;
-    }
     public Ghost(Posn p) {
         this.posn = p;
     }

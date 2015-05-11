@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.io.IOException;
 
 import main.MainWorld;
-import main.MoneyBoard;
 import phase.Selections;
 import user.Config;
 import user.User;
@@ -55,6 +54,7 @@ public class StoreWorld extends World {
 	 * Create the description of the selected item
 	 * @return
 	 */
+        
 	public WorldImage createDisp() {
 		WorldImage pic = new RectangleImage(new Posn(300, 500), 560, 100, Color.pink);
 		if (selections.getSelectedNum() < Config.itemNum) {
@@ -97,18 +97,10 @@ public class StoreWorld extends World {
         return(new WorldEnd(false, makeEnd()));
     }
     
-    //  World onTick()
-    //  Block drops
-    //  Check for clear & color blend
     public World onTick() {        
-        return this;
-        //return(new World(this.score, this.live, this.d, this.height));        
+        return this; 
     }
 
-    //  World onKeyEvent()
-        /*  
-        Move as directed if it is not stopped by the dead blocks or out of range
-        */
     
     @SuppressWarnings("empty-statement")
     public World onKeyEvent(String k) {

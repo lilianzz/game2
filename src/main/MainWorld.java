@@ -60,9 +60,6 @@ public class MainWorld extends javalib.funworld.World{
         return(new WorldEnd(finish, makeEnd()));
     }
     
-    //  World onTick()
-    //  Block drops
-    //  Check for clear & color blend
     public MainWorld onTick() {        
         return this;
         //return(new World(this.score, this.live, this.d, this.height));        

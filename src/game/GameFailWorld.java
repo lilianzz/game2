@@ -34,18 +34,20 @@ public class GameFailWorld extends javalib.funworld.World{
     }
     
     public WorldImage makeEnd() {
-        WorldImage pic = makeImage();
+        WorldImage pic = makeImage(); 
         TextImage s2 = new TextImage(
                 new Posn(300,300),
-                "THANK YOU",
+                "NO MORE LIVES GAME OVER!",
                 40,
-                Color.red
+                Color.white
         );        
         return(new OverlayImages(pic, s2));
     }
     
-    public WorldEnd worldEnds() {
-        return(new WorldEnd(false, makeEnd()));
+    public WorldEnd worldEnds() {        
+        boolean dead = false;
+        if (User.life == 0) { dead = true;}
+        return(new WorldEnd(dead,makeEnd()));
     }
     
     //  World onTick()

@@ -21,6 +21,7 @@ public final class User {
 	public static int money;
 	public static int[] nowItemLevels;
 	public static String fileName = "game.save";
+        public static int life;
 	
 	
 	public static void loadGame() throws IOException {
@@ -35,6 +36,7 @@ public final class User {
 		try {
 			level = saveFile.readInt();
 			money = saveFile.readInt();
+                        life = saveFile.readInt();
 			for (int i = 0; i < Config.itemNum; i++) {
 				User.nowItemLevels[i] = saveFile.readInt();
 			}
@@ -55,6 +57,7 @@ public final class User {
 	public static void newGame() throws IOException {
 		level = Config.initLevel;
 		money = Config.initMoney;
+                life = Config.initLife;
 		for (int i = 0; i < Config.itemNum; i++) {
 			nowItemLevels[i] = Config.items[i].initLevel;
 		}
@@ -80,7 +83,17 @@ public final class User {
 			e.printStackTrace();
 		}
 	}
-	
+        
+	public static void loseLife() {
+            User.life--;
+		try {
+			save();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+            
+        }
 	public static void earn(int delta) {
 		money += delta;
 		try {
@@ -118,6 +131,7 @@ public final class User {
 		}
 		saveFile.writeInt(level);
 		saveFile.writeInt(money);
+                saveFile.writeInt(life);
 		for (int i = 0; i < Config.itemNum; i++) {
 			saveFile.writeInt(User.nowItemLevels[i]);
 		}

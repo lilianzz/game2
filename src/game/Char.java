@@ -16,8 +16,7 @@ import javalib.worldimages.WorldImage;
  */
 public class Char implements Element{
     Posn posn;    
-    Bombs bom;
-    int coin;
+    
     public Posn posn() {
         return this.posn;
     }
@@ -27,32 +26,24 @@ public class Char implements Element{
                 (this.posn.y > 0) &&
                 (this.posn.y < 600));
     }
-    public int Type() {
-        return 2;
-    }
-    public Char(Posn p, int c) {
+    public Char(Posn p) {
         this.posn = p;
-        this.coin = c;
     }
     public Char up() {
         int le = this.posn.y - 50;
-        return(new Char(new Posn(this.posn.x,le),this.coin));
+        return(new Char(new Posn(this.posn.x,le)));
     }
     public Char down() {
         int le = this.posn.y + 50;
-        return(new Char(new Posn(this.posn.x,le),this.coin));
+        return(new Char(new Posn(this.posn.x,le)));
     }
     public Char left() {
         int le = this.posn.x - 50;
-        return(new Char(new Posn(le,this.posn.y),this.coin));
+        return(new Char(new Posn(le,this.posn.y)));
     }    
     public Char right() {
         int le = this.posn.x + 50;
-        return(new Char(new Posn(le,this.posn.y),this.coin));
-    }
-    public Char addBomb() {
-        bom.add(this.posn);
-        return(new Char(posn,coin));
+        return(new Char(new Posn(le,this.posn.y)));
     }
     
     public WorldImage draw() {

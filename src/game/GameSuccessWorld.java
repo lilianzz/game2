@@ -50,20 +50,13 @@ public class GameSuccessWorld extends World{
     
     public WorldEnd worldEnds() {
         return(new WorldEnd(false, makeEnd()));
+    
     }
     
-    //  World onTick()
-    //  Block drops
-    //  Check for clear & color blend
     public World onTick() {        
-        return this;
-        //return(new World(this.score, this.live, this.d, this.height));        
+        return this;    
     }
 
-    //  World onKeyEvent()
-        /*  
-        Move as directed if it is not stopped by the dead blocks or out of range
-        */
     
     @SuppressWarnings("empty-statement")
     public World onKeyEvent(String k) {

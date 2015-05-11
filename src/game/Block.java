@@ -19,9 +19,6 @@ public class Block implements Element {
     public Block(Posn p) {
         this.posn = p;
     }
-    public int Type() {
-        return 4;
-    }
     public Posn posn() {
         return this.posn;
     }

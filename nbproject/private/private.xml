@@ -3,17 +3,33 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/CS203/game2/src/game2/Blocks.java</file>
-            <file>file:/E:/CS203/game2/src/game2/Block.java</file>
-            <file>file:/E:/CS203/game2/src/game2/Bombs.java</file>
-            <file>file:/E:/CS203/game2/src/game2/Char.java</file>
-            <file>file:/E:/CS203/game2/src/game2/Bomb.java</file>
-            <file>file:/E:/CS203/game2/src/game2/World.java</file>
-            <file>file:/E:/CS203/game2/src/game2/Ghost.java</file>
-            <file>file:/E:/CS203/game2/src/game2/Fire.java</file>
-            <file>file:/E:/CS203/game2/src/game2/Ghosts.java</file>
-            <file>file:/E:/CS203/game2/src/game2/Element.java</file>
-            <file>file:/E:/CS203/game2/src/game2/Game2.java</file>
+            <file>file:/E:/CS203/game2/game2/src/main/MainWorld.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Char.java</file>
+            <file>file:/E:/CS203/game2/game2/src/tool/Tool.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/GameFailWorld.java</file>
+            <file>file:/E:/CS203/game2/game2/src/user/User.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/GameWorld.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Block.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Ghosts.java</file>
+            <file>file:/E:/CS203/game2/game2/src/phase/Item.java</file>
+            <file>file:/E:/CS203/game2/game2/src/phase/Selections.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Bombs.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Blocks.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Game2.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Fire.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Ghost.java</file>
+            <file>file:/E:/CS203/game2/game2/src/phase/StoreWorld.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/GameSuccessWorld.java</file>
+            <file>file:/E:/CS203/game2/game2/src/phase/Selection.java</file>
+            <file>file:/E:/CS203/game2/game2/src/phase/MoneyBoard.java</file>
+            <file>file:/E:/CS203/game2/game2/src/store/Item.java</file>
+            <file>file:/E:/CS203/game2/game2/src/main/Main.java</file>
+            <file>file:/E:/CS203/game2/game2/src/phase/MainWorld.java</file>
+            <file>file:/E:/CS203/game2/game2/src/user/Config.java</file>
+            <file>file:/E:/CS203/game2/game2/src/store/StoreWorld.java</file>
+            <file>file:/E:/CS203/game2/game2/src/main/MoneyBoard.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Element.java</file>
+            <file>file:/E:/CS203/game2/game2/src/game/Bomb.java</file>
         </group>
     </open-files>
 </project-private>

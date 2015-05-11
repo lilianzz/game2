@@ -8,7 +8,7 @@ package game;
 
 /**
  *
- * @author ���绮����
+ * @author ��lilianzz���
  */
 import java.awt.Color; 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class GameWorld extends javalib.funworld.World {
     final static int ng = 3;
     
     public GameWorld() {
-        this.c = new Char((new Posn(25,25)),0);
+        this.c = new Char((new Posn(25,25)));
         this.blocks = new Blocks(3);
         this.ghosts = new Ghosts(User.level);
         this.bombs = new Bombs(4);
@@ -49,10 +49,16 @@ public class GameWorld extends javalib.funworld.World {
             com = new OverlayImages(com,this.blocks.draw());
         }
         com = new OverlayImages(com,this.bombs.draw());
-        
+        TextImage s2 = new TextImage(
+                new Posn(500,50),
+                "Life:" + User.life,
+                40,
+                Color.red
+        ); 
         if (!(this.ghosts.draw() == null)) {
             com = new OverlayImages(com,this.ghosts.draw());
         }
+        com = new OverlayImages(com, s2);
         return(com);
     }
     
@@ -69,15 +75,16 @@ public class GameWorld extends javalib.funworld.World {
         }        
         TextImage s2 = new TextImage(
                 new Posn(300,300),
-                "GAME OVER:",
+                "NO MORE LIVES GAME OVER!",
                 40,
-                Color.red
+                Color.white
         );        
         return(new OverlayImages(com,s2));
     }
     
     public WorldEnd worldEnds() {
         boolean dead = false;
+        if (User.life == 0) { dead = true;}
         return(new WorldEnd(dead,makeEnd()));
     }
     
@@ -93,10 +100,10 @@ public class GameWorld extends javalib.funworld.World {
         	User.levelUp();
         	return new GameSuccessWorld(makeImage());
         }
-        if (!alive) 
-        	return new GameFailWorld(makeImage());
-        return this;
-        //return(new World(this.score, this.live, this.d, this.height));        
+        if (!alive) {
+            User.loseLife();
+        	return new GameFailWorld(makeImage());}
+        return this;    
     }
 
     //  World onKeyEvent()
@@ -140,6 +147,7 @@ public class GameWorld extends javalib.funworld.World {
         }
         
         if (ghosts.capture(c)) {
+            User.loseLife();
         	return new GameFailWorld(makeImage());
         }
         return this;
