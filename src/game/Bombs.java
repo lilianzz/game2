@@ -167,6 +167,7 @@ public class Bombs {
         	//Kill ghosts
         	for (Iterator<Ghost> iter = ghosts.ghostList.iterator(); iter.hasNext();) {
             	Ghost ghost = iter.next();
+                
             	if (fire.contains(ghost.posn())) {
             		iter.remove();
             		User.earn(Config.ghostEarnMoney);

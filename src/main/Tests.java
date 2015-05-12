@@ -15,6 +15,7 @@ import game.*;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import javalib.worldimages.Posn;
 import phase.*;
@@ -114,6 +115,17 @@ public class Tests {
         return(r);
     }    
     
+    public static boolean testBlocks() {
+        boolean t = true;
+        for (int i = 0; i<300; i++) {
+        Blocks bs = new Blocks(5);    
+        bs.remove(new Posn(125,125));       
+        Block r = new Block(new Posn(125,125));
+        if (!bs.notIn(r)) t = false;
+        }
+        return t;        
+    }
+    
     static public boolean moveEqual() {
         boolean t = true;
         for (int i = 0; i<300; i++) {
@@ -194,6 +206,33 @@ public class Tests {
             {t =  false;}
         }
         return t;
+    }
+    
+    static public boolean bombBoth() {
+        boolean t = true;
+        for (int i=0; i<300; i++) {
+        Blocks b = new Blocks();
+        Ghosts g = new Ghosts(5);
+        for (Iterator<Ghost> iter = g.ghostList.iterator(); iter.hasNext();) {
+            Ghost gg = iter.next();
+            //System.out.print(gg.posn().x+" "+gg.posn().y+"     ");
+        }
+        Posn p =g.ghostList.get(0).posn();
+        Char c = new Char(p);
+        Bombs bb = new Bombs(1);
+        bb.add(new Posn(p.x-50,p.y));
+        bb.bombList.get(0).time = 0;
+        bb.ticks(b,c,g);                
+        for (Iterator<Ghost> iter = g.ghostList.iterator(); iter.hasNext();) {
+            Ghost gg = iter.next();
+            //System.out.print(gg.posn().x+" "+gg.posn().y+"     ");
+        }
+        if ((g.ghostList.get(0).posn().x == p.x) && (g.ghostList.get(0).posn().y == p.y))  {t = false;
+        System.out.println(g.ghostList.get(0).posn().y );
+        }        
+        }
+        return t;
+    
     }
     
 }

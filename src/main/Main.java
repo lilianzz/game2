@@ -14,14 +14,19 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		Config.load();
-                System.out.println("Whether passed the blockInrange test "+Tests.blockInRange());
-                System.out.println("Whether passed the ghostAfterMoveInRange test "+Tests.ghostAfterMoveInRange());
-                System.out.println("Whether passed the charAfterMoveInRange test "+Tests.charAfterMoveInRange());
-                System.out.println("Whether passed the moveEqual test "+Tests.moveEqual());
-                System.out.println("Whether passed the captureEqual test "+Tests.captureEqual());
-                System.out.println("Whether passed the selectionChange test "+Tests.selectionChange());
-                System.out.println("Whether passed the bombAllGhosts test "+Tests.bombAllGhosts());
-                System.out.println("Whether passed the explodeBombs test "+Tests.explodeBombs());
+                System.out.println("Whether passed the blockInrange test?: "+Tests.blockInRange());
+                System.out.println("Whether passed the ghostAfterMoveInRange test?: "+Tests.ghostAfterMoveInRange());
+                System.out.println("Whether passed the charAfterMoveInRange test?: "+Tests.charAfterMoveInRange());
+                System.out.println("Whether passed the moveEqual test?: "+Tests.moveEqual());
+                System.out.println("Whether passed the captureEqual test?: "+Tests.captureEqual());
+                System.out.println("Whether passed the selectionChange test?: "+Tests.selectionChange());  
+                User.newGame();
+                System.out.println("Whether passed the bombAllGhosts test?: "+Tests.bombAllGhosts());                  
+                User.newGame();
+                System.out.println("Whether passed the explodeBombs test?: "+Tests.explodeBombs());      
+                User.newGame();
+                System.out.println("Whether passed the bombBoth test?: "+Tests.bombBoth());     
+                System.out.println("Whether passed the testBlocks test?: "+Tests.testBlocks());
                 Config.load();
 		User.newGame();
 		// TODO Auto-generated method stub
