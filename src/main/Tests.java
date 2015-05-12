@@ -53,20 +53,20 @@ public class Tests {
         y = y*50+25;            
         return (new Posn(x,y));
     }
-    //alive is false if and only if randomly generated char are in fire
-    //since there is no ghost
-    static public boolean inFireFail() {
-        Bombs b;
-        Char c;
+    
+    
+    public static boolean testBlocks() {
         boolean t = true;
-        for (int i = 0; i< 300; i++) {
-        b = new Bombs(4);            
-        b.add(randPosn());
-        c = new Char(randPosn());
-        
+        for (int i = 0; i<300; i++) {
+        Blocks bs = new Blocks(5);    
+        bs.remove(new Posn(125,125));       
+        Block r = new Block(new Posn(125,125));
+        if (!bs.notIn(r)) t = false;
         }
-        return true;
+        return t;        
     }
+    
+    
     
     
     static public boolean ghostAfterMoveInRange(){
@@ -115,16 +115,7 @@ public class Tests {
         return(r);
     }    
     
-    public static boolean testBlocks() {
-        boolean t = true;
-        for (int i = 0; i<300; i++) {
-        Blocks bs = new Blocks(5);    
-        bs.remove(new Posn(125,125));       
-        Block r = new Block(new Posn(125,125));
-        if (!bs.notIn(r)) t = false;
-        }
-        return t;        
-    }
+    
     
     static public boolean moveEqual() {
         boolean t = true;
@@ -168,6 +159,29 @@ public class Tests {
         }
         }
         return f;              
+    }
+    
+    static public boolean bombStopMove() {
+        boolean t = true;
+        User.nowItemLevels[1] = 4;
+        User.nowItemLevels[0] = 4;        
+        Blocks b = new Blocks();
+        for (int i = 0; i < 300; i++) {
+            Ghosts g = new Ghosts(3);
+            Posn r = new Posn(g.ghostList.get(0).posn().x,g.ghostList.get(0).posn().y);
+            Bombs bombs = new Bombs (5);
+            bombs.add(new Posn(r.x,r.y+50));
+            bombs.add(new Posn(r.x,r.y-50));
+            bombs.add(new Posn(r.x+50,r.y));
+            bombs.add(new Posn(r.x-50,r.y));   
+            for (int j = 0; j<14; j++) {
+                g.randMove(b,bombs);
+            }
+            if (!((g.ghostList.get(0).posn().x == r.x) && (g.ghostList.get(0).posn().y == r.y))) {
+                t = false;
+            }
+        }
+        return t;
     }
     
     static public boolean bombAllGhosts() {

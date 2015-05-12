@@ -26,7 +26,9 @@ public class Main {
                 System.out.println("Whether passed the explodeBombs test?: "+Tests.explodeBombs());      
                 User.newGame();
                 System.out.println("Whether passed the bombBoth test?: "+Tests.bombBoth());     
-                System.out.println("Whether passed the testBlocks test?: "+Tests.testBlocks());
+                System.out.println("Whether passed the testBlocks test?: "+Tests.testBlocks());   
+                User.newGame();
+                System.out.println("Whether passed the bombStopMove test?: "+Tests.bombStopMove());
                 Config.load();
 		User.newGame();
 		// TODO Auto-generated method stub
